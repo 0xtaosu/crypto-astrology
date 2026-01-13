@@ -43,7 +43,8 @@ const STAR_INTERPRETATIONS: Record<StarName, { trait: string; advice: string; sc
 }
 
 // 幸运颜色
-const LUCKY_COLORS = ['#00F0FF', '#BC13FE', '#FF2A2A', '#FFD700', '#00FF00', '#FF1493']
+// 幸运颜色
+const LUCKY_COLORS = ['#6366f1', '#a855f7', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'] // Indigo, Purple, Pink, Amber, Emerald, Blue
 
 // 计算合约地址的哈希值作为随机种子
 function hashAddress(address: string): number {
@@ -76,11 +77,11 @@ function calculateWealthPalaceStar(date: Date, hash: number): StarName {
 function calculateSunSign(date: Date): ZodiacSign {
   const month = date.getMonth() + 1
   const day = date.getDate()
-  
+
   for (const zodiac of ZODIAC_DATES) {
     const [startMonth, startDay] = zodiac.start
     const [endMonth, endDay] = zodiac.end
-    
+
     if (
       (month === startMonth && day >= startDay) ||
       (month === endMonth && day <= endDay)
@@ -88,7 +89,7 @@ function calculateSunSign(date: Date): ZodiacSign {
       return zodiac.sign as ZodiacSign
     }
   }
-  
+
   return 'Capricorn'
 }
 
@@ -111,41 +112,41 @@ const ZODIAC_SENTIMENT: Record<ZodiacSign, { sentiment: 'Bullish' | 'Bearish' | 
 // 主要分析函数
 export function analyzeToken(input: TokenInput): FortuneResult {
   const hash = hashAddress(input.contractAddress)
-  
+
   // 紫微斗数分析
   const lifePalaceStar = calculateLifePalaceStar(input.genesisDate, hash)
   const wealthPalaceStar = calculateWealthPalaceStar(input.genesisDate, hash)
-  
+
   const lifeStarInfo = STAR_INTERPRETATIONS[lifePalaceStar]
   const wealthStarInfo = STAR_INTERPRETATIONS[wealthPalaceStar]
-  
+
   // 西方占星分析
   const sunSign = calculateSunSign(input.genesisDate)
   const zodiacInfo = ZODIAC_SENTIMENT[sunSign]
-  
+
   // 综合运势评分
   const baseScore = (lifeStarInfo.score + wealthStarInfo.score) / 2
   const hashModifier = (hash % 21) - 10 // -10 to +10
   const fortuneScore = Math.max(0, Math.min(100, Math.round(baseScore + hashModifier)))
-  
+
   // 风险等级
   let riskLevel: 'Low' | 'Medium' | 'High' | 'Extreme'
   if (fortuneScore >= 80) riskLevel = 'Low'
   else if (fortuneScore >= 65) riskLevel = 'Medium'
   else if (fortuneScore >= 50) riskLevel = 'High'
   else riskLevel = 'Extreme'
-  
+
   // 投资建议
   let investmentAdvice: string
   if (fortuneScore >= 85) investmentAdvice = '重仓出击 · ALL IN'
   else if (fortuneScore >= 70) investmentAdvice = '适量配置 · 稳健投资'
   else if (fortuneScore >= 55) investmentAdvice = '小额试水 · 谨慎观察'
   else investmentAdvice = '建议远离 · 风险极高'
-  
+
   // 幸运元素
   const luckyColor = LUCKY_COLORS[hash % LUCKY_COLORS.length]
   const luckyNumber = (hash % 9) + 1
-  
+
   return {
     tokenName: input.name,
     contractAddress: input.contractAddress,

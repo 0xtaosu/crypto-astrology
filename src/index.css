@@ -1,16 +1,49 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@theme {
+  --color-background: #020617;
+  --color-surface: #0f172a;
+  --color-surfaceHover: #1e293b;
+  --color-primary: #6366f1;
+  --color-secondary: #a855f7;
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Base styles */
+:root {
+  --background: #020617;
+  --text-primary: #f8fafc;
 }
 
 body {
-  font-family: 'JetBrains Mono', monospace;
-  background-color: #050505;
-  color: #00F0FF;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
@@ -19,65 +52,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00F0FF;
+  background-color: var(--color-surfaceHover);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #BC13FE;
-}
-
-/* Glitch effect for text */
-.glitch {
-  position: relative;
-  color: #00F0FF;
-}
-
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch::before {
-  left: 2px;
-  text-shadow: -2px 0 #FF2A2A;
-  clip: rect(24px, 550px, 90px, 0);
-  animation: glitch-anim 3s infinite linear alternate-reverse;
-}
-
-.glitch::after {
-  left: -2px;
-  text-shadow: -2px 0 #BC13FE;
-  clip: rect(85px, 550px, 140px, 0);
-  animation: glitch-anim 2.5s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim {
-  0% {
-    clip: rect(61px, 9999px, 90px, 0);
-  }
-  20% {
-    clip: rect(33px, 9999px, 65px, 0);
-  }
-  40% {
-    clip: rect(106px, 9999px, 125px, 0);
-  }
-  60% {
-    clip: rect(82px, 9999px, 103px, 0);
-  }
-  80% {
-    clip: rect(17px, 9999px, 35px, 0);
-  }
-  100% {
-    clip: rect(94px, 9999px, 112px, 0);
-  }
+  background-color: var(--color-text-muted);
 }
