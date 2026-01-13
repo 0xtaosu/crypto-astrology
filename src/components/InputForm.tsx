@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { TokenInput } from '../types'
+import { translations } from '../lib/translations'
 
 interface InputFormProps {
   onSubmit: (input: TokenInput) => void
+  t: typeof translations.en
 }
 
-export default function InputForm({ onSubmit }: InputFormProps) {
+export default function InputForm({ onSubmit, t }: InputFormProps) {
   const [name, setName] = useState('')
   const [contractAddress, setContractAddress] = useState('')
   const [date, setDate] = useState('')
@@ -15,7 +17,7 @@ export default function InputForm({ onSubmit }: InputFormProps) {
     e.preventDefault()
 
     if (!name || !contractAddress || !date || !time) {
-      alert('Please fill all required fields')
+      alert(t.form_error)
       return
     }
 
@@ -31,28 +33,28 @@ export default function InputForm({ onSubmit }: InputFormProps) {
   return (
     <div className="border-2 border-white p-1 bg-black w-full max-w-lg mx-auto">
       <div className="bg-[#000088] text-white px-2 py-1 font-bold mb-4 flex justify-between items-center">
-        <span>TOKEN_ANALYSIS.EXE</span>
+        <span>{t.form_title}</span>
         <span className="cursor-pointer">X</span>
       </div>
 
       <form onSubmit={handleSubmit} className="p-4 space-y-4 font-mono text-sm">
         <div className="flex flex-col gap-1">
           <label className="text-[#00FF00]">
-            &gt; Enter Token Name:
+            {t.form_name_label}
           </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="retro-input p-1"
-            placeholder="BITCOIN"
+            placeholder={t.form_name_ph}
             required
           />
         </div>
 
         <div className="flex flex-col gap-1">
           <label className="text-[#00FF00]">
-            &gt; Contract Address (0x...):
+            {t.form_addr_label}
           </label>
           <input
             type="text"
@@ -65,10 +67,10 @@ export default function InputForm({ onSubmit }: InputFormProps) {
         </div>
 
         <fieldset className="border border-white p-2">
-          <legend className="text-[#FFFF00] px-2">Genesis Timestamp</legend>
+          <legend className="text-[#FFFF00] px-2">{t.form_genesis_legend}</legend>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[#00FF00]">Date:</label>
+              <label className="text-[#00FF00]">{t.form_date}</label>
               <input
                 type="date"
                 value={date}
@@ -78,7 +80,7 @@ export default function InputForm({ onSubmit }: InputFormProps) {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[#00FF00]">Time:</label>
+              <label className="text-[#00FF00]">{t.form_time}</label>
               <input
                 type="time"
                 value={time}
@@ -95,11 +97,10 @@ export default function InputForm({ onSubmit }: InputFormProps) {
             type="submit"
             className="retro-button px-8 py-2 font-bold text-lg active:translate-y-1"
           >
-            [ CALCULATE DESTINY ]
+            {t.form_submit}
           </button>
         </div>
       </form>
     </div>
   )
 }
-
