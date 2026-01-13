@@ -1,27 +1,10 @@
 import { Lunar } from 'lunar-typescript'
-import { TokenInput, FortuneResult, StarName, ZodiacSign } from '../types'
+import { TokenInput, FortuneResult, StarName } from '../types'
 
 // 十四主星
 const MAIN_STARS: StarName[] = [
   '紫微', '天机', '太阳', '武曲', '天同', '廉贞',
   '天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '破军'
-]
-
-// 星座对应的日期范围 (简化版)
-const ZODIAC_DATES = [
-  { sign: 'Capricorn', start: [1, 1], end: [1, 19] },
-  { sign: 'Aquarius', start: [1, 20], end: [2, 18] },
-  { sign: 'Pisces', start: [2, 19], end: [3, 20] },
-  { sign: 'Aries', start: [3, 21], end: [4, 19] },
-  { sign: 'Taurus', start: [4, 20], end: [5, 20] },
-  { sign: 'Gemini', start: [5, 21], end: [6, 21] },
-  { sign: 'Cancer', start: [6, 22], end: [7, 22] },
-  { sign: 'Leo', start: [7, 23], end: [8, 22] },
-  { sign: 'Virgo', start: [8, 23], end: [9, 22] },
-  { sign: 'Libra', start: [9, 23], end: [10, 23] },
-  { sign: 'Scorpio', start: [10, 24], end: [11, 21] },
-  { sign: 'Sagittarius', start: [11, 22], end: [12, 21] },
-  { sign: 'Capricorn', start: [12, 22], end: [12, 31] },
 ]
 
 // 主星解释
@@ -42,7 +25,6 @@ const STAR_INTERPRETATIONS: Record<StarName, { trait: string; advice: string; sc
   '破军': { trait: '耗星，主破坏创新', advice: '颠覆性项目，极端波动', score: 50 },
 }
 
-// 幸运颜色
 // 幸运颜色
 const LUCKY_COLORS = ['#6366f1', '#a855f7', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'] // Indigo, Purple, Pink, Amber, Emerald, Blue
 
@@ -73,42 +55,6 @@ function calculateWealthPalaceStar(date: Date, hash: number): StarName {
   return MAIN_STARS[index]
 }
 
-// 计算太阳星座
-function calculateSunSign(date: Date): ZodiacSign {
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-
-  for (const zodiac of ZODIAC_DATES) {
-    const [startMonth, startDay] = zodiac.start
-    const [endMonth, endDay] = zodiac.end
-
-    if (
-      (month === startMonth && day >= startDay) ||
-      (month === endMonth && day <= endDay)
-    ) {
-      return zodiac.sign as ZodiacSign
-    }
-  }
-
-  return 'Capricorn'
-}
-
-// 星座市场情绪
-const ZODIAC_SENTIMENT: Record<ZodiacSign, { sentiment: 'Bullish' | 'Bearish' | 'Neutral'; aspect: string }> = {
-  'Aries': { sentiment: 'Bullish', aspect: '火星能量充沛，适合冲锋' },
-  'Taurus': { sentiment: 'Neutral', aspect: '金星守护，稳中求进' },
-  'Gemini': { sentiment: 'Neutral', aspect: '水星影响，信息多变' },
-  'Cancer': { sentiment: 'Bearish', aspect: '月亮阴晴，情绪波动' },
-  'Leo': { sentiment: 'Bullish', aspect: '太阳照耀，王者归来' },
-  'Virgo': { sentiment: 'Neutral', aspect: '注重细节，谨慎前行' },
-  'Libra': { sentiment: 'Neutral', aspect: '天秤平衡，观望为主' },
-  'Scorpio': { sentiment: 'Bullish', aspect: '冥王力量，深不可测' },
-  'Sagittarius': { sentiment: 'Bullish', aspect: '木星扩张，机会无限' },
-  'Capricorn': { sentiment: 'Bearish', aspect: '土星压制，需要耐心' },
-  'Aquarius': { sentiment: 'Bullish', aspect: '天王创新，未来可期' },
-  'Pisces': { sentiment: 'Neutral', aspect: '海王梦幻，虚实难辨' },
-}
-
 // 主要分析函数
 export function analyzeToken(input: TokenInput): FortuneResult {
   const hash = hashAddress(input.contractAddress)
@@ -119,10 +65,6 @@ export function analyzeToken(input: TokenInput): FortuneResult {
 
   const lifeStarInfo = STAR_INTERPRETATIONS[lifePalaceStar]
   const wealthStarInfo = STAR_INTERPRETATIONS[wealthPalaceStar]
-
-  // 西方占星分析
-  const sunSign = calculateSunSign(input.genesisDate)
-  const zodiacInfo = ZODIAC_SENTIMENT[sunSign]
 
   // 综合运势评分
   const baseScore = (lifeStarInfo.score + wealthStarInfo.score) / 2
@@ -160,11 +102,6 @@ export function analyzeToken(input: TokenInput): FortuneResult {
       interpretation: `命宫主星【${lifePalaceStar}】${lifeStarInfo.trait}；财帛宫主星【${wealthPalaceStar}】${wealthStarInfo.trait}。${lifeStarInfo.advice}`,
       luckyColor,
       luckyNumber,
-    },
-    western: {
-      sunSign,
-      marketSentiment: zodiacInfo.sentiment,
-      aspectInfluence: zodiacInfo.aspect,
     },
   }
 }

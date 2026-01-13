@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Crypto Astrology** is a web-based entertainment tool that combines cryptocurrency analysis with Eastern (紫微斗数) and Western astrology. It analyzes tokens based on their contract address and genesis timestamp to generate fortune reports with a "Cyber-Taoism" aesthetic.
+**Crypto Astrology** is a web-based entertainment tool that combines cryptocurrency analysis with Eastern mysticism (紫微斗数, 八字, 命理). It analyzes tokens based on their contract address and genesis timestamp to generate fortune reports with a "Cyber-Taoism" aesthetic.
 
 ## Tech Stack
 
@@ -48,10 +48,6 @@ Users provide three required inputs:
 - Calculates **财帛宫主星** (Wealth Palace Star) from genesis month - represents capital flow
 - Generates fortune score (0-100) and auspiciousness rating
 
-**Western Astrology Module**:
-- Calculates Sun Sign from genesis date
-- Predicts market sentiment (Bullish/Bearish)
-
 **Hash Fortune Adjustment**:
 - Uses contract address hash as random seed to fine-tune fortune scores
 - Ensures each token has a unique analysis result
@@ -65,7 +61,6 @@ Core metrics displayed:
 
 Detailed analysis cards:
 - **紫微分析卡**: Main stars, detailed interpretation, lucky elements (colors, numbers)
-- **星盘分析卡**: Zodiac sign, aspect influences
 
 ### PDF Export
 - Filename format: `{TokenName}_report.pdf`
@@ -80,7 +75,7 @@ Detailed analysis cards:
 
 ## Target Users
 
-1. **玄学信徒 (Mysticism Believers)**: Expect professional terminology (命宫, 水逆) and fortune judgments
+1. **玄学信徒 (Mysticism Believers)**: Expect professional Eastern mysticism terminology (命宫, 八字, 紫微) and fortune judgments
 2. **币圈 Degen**: Need quick go/no-go decisions on new tokens, seeking psychological reassurance
 3. **猎奇玩家 (Curious Players)**: Want visually impactful reports suitable for Twitter/social sharing
 
@@ -92,5 +87,5 @@ Phase 2 will include:
 
 Phase 3 plans:
 - LLM integration (GPT-4) for more natural fortune telling narratives
-- Additional divination methods (八字, 易经六爻)
+- Enhanced divination methods with deeper 八字 and 易经六爻 analysis
 - User accounts for saving favorite tokens and daily fortune updates
