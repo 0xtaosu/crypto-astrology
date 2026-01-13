@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { TokenInput } from '../types'
+import { translations } from '../lib/translations'
 
 interface InputFormProps {
   onSubmit: (input: TokenInput) => void
+  t: typeof translations.en
 }
 
-export default function InputForm({ onSubmit }: InputFormProps) {
+export default function InputForm({ onSubmit, t }: InputFormProps) {
   const [name, setName] = useState('')
   const [contractAddress, setContractAddress] = useState('')
   const [date, setDate] = useState('')
@@ -15,7 +17,7 @@ export default function InputForm({ onSubmit }: InputFormProps) {
     e.preventDefault()
 
     if (!name || !contractAddress || !date || !time) {
-      alert('Please fill all required fields')
+      alert(t.form_error)
       return
     }
 
@@ -29,77 +31,76 @@ export default function InputForm({ onSubmit }: InputFormProps) {
   }
 
   return (
-    <div className="w-full bg-surface/50 backdrop-blur-sm border border-surfaceHover rounded-xl p-8 shadow-2xl">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1.5">
-              Token Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full bg-background border border-surfaceHover rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none placeholder:text-text-muted/50"
-              placeholder="e.g. Bitcoin"
-              required
-            />
-          </div>
+    <div className="border-2 border-white p-1 bg-black w-full max-w-lg mx-auto">
+      <div className="bg-[#000088] text-white px-2 py-1 font-bold mb-4 flex justify-between items-center">
+        <span>{t.form_title}</span>
+        <span className="cursor-pointer">X</span>
+      </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1.5">
-              Contract Address
-            </label>
-            <input
-              type="text"
-              value={contractAddress}
-              onChange={(e) => setContractAddress(e.target.value)}
-              className="w-full bg-background border border-surfaceHover rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none font-mono text-sm placeholder:text-text-muted/50"
-              placeholder="0x..."
-              required
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="p-4 space-y-4 font-mono text-sm">
+        <div className="flex flex-col gap-1">
+          <label className="text-[#00FF00]">
+            {t.form_name_label}
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="retro-input p-1"
+            placeholder={t.form_name_ph}
+            required
+          />
+        </div>
 
+        <div className="flex flex-col gap-1">
+          <label className="text-[#00FF00]">
+            {t.form_addr_label}
+          </label>
+          <input
+            type="text"
+            value={contractAddress}
+            onChange={(e) => setContractAddress(e.target.value)}
+            className="retro-input p-1"
+            placeholder="0x..."
+            required
+          />
+        </div>
+
+        <fieldset className="border border-white p-2">
+          <legend className="text-[#FFFF00] px-2">{t.form_genesis_legend}</legend>
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">
-                Genesis Date
-              </label>
+            <div className="flex flex-col gap-1">
+              <label className="text-[#00FF00]">{t.form_date}</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full bg-background border border-surfaceHover rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                className="retro-input p-1"
                 required
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">
-                Genesis Time
-              </label>
+            <div className="flex flex-col gap-1">
+              <label className="text-[#00FF00]">{t.form_time}</label>
               <input
                 type="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="w-full bg-background border border-surfaceHover rounded-lg px-4 py-3 text-text-primary focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                className="retro-input p-1"
                 required
               />
             </div>
           </div>
+        </fieldset>
+
+        <div className="pt-4 flex justify-center">
+          <button
+            type="submit"
+            className="retro-button px-8 py-2 font-bold text-lg active:translate-y-1"
+          >
+            {t.form_submit}
+          </button>
         </div>
-
-        <button
-          type="submit"
-          className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3.5 rounded-lg transition-all duration-200 transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-primary/20"
-        >
-          Reveal Identity
-        </button>
       </form>
-
-      <p className="text-center mt-6 text-xs text-text-muted tracking-wide">
-        FOR ENTERTAINMENT PURPOSES ONLY
-      </p>
     </div>
   )
 }
