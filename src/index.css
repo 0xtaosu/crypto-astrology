@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: #050505;
+  color: #00F0FF;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00F0FF;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #BC13FE;
+}
+
+/* Glitch effect for text */
+.glitch {
+  position: relative;
+  color: #00F0FF;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #FF2A2A;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 #BC13FE;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(61px, 9999px, 90px, 0);
+  }
+  20% {
+    clip: rect(33px, 9999px, 65px, 0);
+  }
+  40% {
+    clip: rect(106px, 9999px, 125px, 0);
+  }
+  60% {
+    clip: rect(82px, 9999px, 103px, 0);
+  }
+  80% {
+    clip: rect(17px, 9999px, 35px, 0);
+  }
+  100% {
+    clip: rect(94px, 9999px, 112px, 0);
+  }
+}
