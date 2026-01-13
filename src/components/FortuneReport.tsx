@@ -6,21 +6,6 @@ interface FortuneReportProps {
   onReset: () => void
 }
 
-const ZODIAC_SYMBOLS: Record<string, string> = {
-  'Aries': '♈',
-  'Taurus': '♉',
-  'Gemini': '♊',
-  'Cancer': '♋',
-  'Leo': '♌',
-  'Virgo': '♍',
-  'Libra': '♎',
-  'Scorpio': '♏',
-  'Sagittarius': '♐',
-  'Capricorn': '♑',
-  'Aquarius': '♒',
-  'Pisces': '♓',
-}
-
 export default function FortuneReport({ result, onReset }: FortuneReportProps) {
   const handleDownloadPDF = () => {
     generatePDF(result)
@@ -82,91 +67,58 @@ export default function FortuneReport({ result, onReset }: FortuneReportProps) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Eastern Astrology */}
-        <div className="bg-surface/50 backdrop-blur-sm border border-surfaceHover rounded-xl p-6 shadow-sm">
-          <h3 className="font-serif text-xl text-text-primary mb-6 flex items-center gap-2 border-b border-surfaceHover pb-4">
-            <span>Eastern Analysis</span>
-            <span className="text-xs font-sans text-text-muted uppercase tracking-wider ml-auto">Ziwei Dou Shu</span>
-          </h3>
+      {/* Eastern Astrology - Full Width */}
+      <div className="bg-surface/50 backdrop-blur-sm border border-surfaceHover rounded-xl p-6 shadow-sm">
+        <h3 className="font-serif text-xl text-text-primary mb-6 flex items-center gap-2 border-b border-surfaceHover pb-4">
+          <span>紫微斗数分析</span>
+          <span className="text-xs font-sans text-text-muted uppercase tracking-wider ml-auto">Ziwei Dou Shu</span>
+        </h3>
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs text-text-muted uppercase tracking-wide mb-1">Life Star</p>
-                <p className="font-medium text-lg text-text-primary">{result.ziwei.lifePalaceStar}</p>
-              </div>
-              <div>
-                <p className="text-xs text-text-muted uppercase tracking-wide mb-1">Wealth Star</p>
-                <p className="font-medium text-lg text-text-primary">{result.ziwei.wealthPalaceStar}</p>
-              </div>
-            </div>
-
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs text-text-muted uppercase tracking-wide mb-2">Interpretation</p>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {result.ziwei.interpretation}
-              </p>
+              <p className="text-xs text-text-muted uppercase tracking-wide mb-1">命宫主星 Life Star</p>
+              <p className="font-medium text-lg text-text-primary">{result.ziwei.lifePalaceStar}</p>
             </div>
+            <div>
+              <p className="text-xs text-text-muted uppercase tracking-wide mb-1">财帛宫主星 Wealth Star</p>
+              <p className="font-medium text-lg text-text-primary">{result.ziwei.wealthPalaceStar}</p>
+            </div>
+          </div>
 
-            <div className="flex gap-8 pt-2">
-              <div>
-                <p className="text-xs text-text-muted uppercase tracking-wide mb-2">Lucky Color</p>
-                <div className="flex items-center gap-2">
-                  <div
-                    className="w-6 h-6 rounded-full border border-surfaceHover shadow-sm"
-                    style={{ backgroundColor: result.ziwei.luckyColor }}
-                  />
-                  <span className="text-sm text-text-secondary capitalize">
-                    {result.ziwei.luckyColor}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <p className="text-xs text-text-muted uppercase tracking-wide mb-2">Lucky Number</p>
-                <span className="font-mono text-xl font-bold text-text-primary">
-                  {result.ziwei.luckyNumber}
+          <div>
+            <p className="text-xs text-text-muted uppercase tracking-wide mb-2">解读 Interpretation</p>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              {result.ziwei.interpretation}
+            </p>
+          </div>
+
+          <div className="flex gap-8 pt-2">
+            <div>
+              <p className="text-xs text-text-muted uppercase tracking-wide mb-2">幸运色 Lucky Color</p>
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-6 h-6 rounded-full border border-surfaceHover shadow-sm"
+                  style={{ backgroundColor: result.ziwei.luckyColor }}
+                />
+                <span className="text-sm text-text-secondary capitalize">
+                  {result.ziwei.luckyColor}
                 </span>
               </div>
             </div>
+            <div>
+              <p className="text-xs text-text-muted uppercase tracking-wide mb-2">幸运数字 Lucky Number</p>
+              <span className="font-mono text-xl font-bold text-text-primary">
+                {result.ziwei.luckyNumber}
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Western Astrology */}
-        <div className="bg-surface/50 backdrop-blur-sm border border-surfaceHover rounded-xl p-6 shadow-sm">
-          <h3 className="font-serif text-xl text-text-primary mb-6 flex items-center gap-2 border-b border-surfaceHover pb-4">
-            <span>Western Analysis</span>
-            <span className="text-xs font-sans text-text-muted uppercase tracking-wider ml-auto">Astrology</span>
-          </h3>
-
-          <div className="space-y-6">
-            <div>
-              <p className="text-xs text-text-muted uppercase tracking-wide mb-1">Sun Sign</p>
-              <p className="font-serif text-2xl text-text-primary">
-                {ZODIAC_SYMBOLS[result.western.sunSign]} {result.western.sunSign}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-text-muted uppercase tracking-wide mb-2">Market Sentiment</p>
-              <div className="inline-block px-3 py-1 rounded bg-surface border border-surfaceHover text-sm font-medium text-text-secondary">
-                {result.western.marketSentiment}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs text-text-muted uppercase tracking-wide mb-2">Aspect Influence</p>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                {result.western.aspectInfluence}
-              </p>
-            </div>
-
-            <div className="pt-2">
-              <p className="text-xs text-text-muted uppercase tracking-wide mb-1">Genesis Date</p>
-              <p className="font-mono text-xs text-text-muted">
-                {result.genesisDate.toLocaleString()}
-              </p>
-            </div>
+          <div className="pt-2">
+            <p className="text-xs text-text-muted uppercase tracking-wide mb-1">创世时间 Genesis Date</p>
+            <p className="font-mono text-xs text-text-muted">
+              {result.genesisDate.toLocaleString()}
+            </p>
           </div>
         </div>
       </div>

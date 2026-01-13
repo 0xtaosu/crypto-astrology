@@ -75,26 +75,6 @@ export function generatePDF(result: FortuneResult) {
   pdf.text('Lucky Color: ' + result.ziwei.luckyColor, margin, yPos)
   pdf.text('Lucky Number: ' + result.ziwei.luckyNumber, margin + 80, yPos)
 
-  yPos += 15
-  pdf.setFontSize(12)
-  pdf.setTextColor(99, 102, 241)
-  pdf.text('WESTERN ASTROLOGY', margin, yPos)
-
-  yPos += 10
-  pdf.setFontSize(10)
-  pdf.setTextColor(15, 23, 42)
-  pdf.text('Sun Sign: ' + result.western.sunSign, margin, yPos)
-
-  yPos += 6
-  pdf.text('Market Sentiment: ' + result.western.marketSentiment, margin, yPos)
-
-  yPos += 8
-  pdf.setFontSize(9)
-  pdf.setTextColor(71, 85, 105)
-  const aspectLines = pdf.splitTextToSize(result.western.aspectInfluence, pageWidth - 2 * margin)
-  pdf.text(aspectLines, margin, yPos)
-  yPos += aspectLines.length * 5
-
   yPos += 20
   pdf.setDrawColor(226, 232, 240) // Slate 200
   pdf.line(margin, yPos, pageWidth - margin, yPos)
