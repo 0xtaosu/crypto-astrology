@@ -110,7 +110,7 @@ function App() {
             )}
 
             {!isLoading && result && (
-              <FortuneReport result={result} onReset={handleReset} t={t} lang={lang} />
+              <FortuneReport result={result} onReset={handleReset} t={t} />
             )}
           </main>
 
@@ -119,13 +119,15 @@ function App() {
             <div className="bg-[#008800] text-white text-center font-bold mb-2 py-1 border border-white">
               {t.latest_winners}
             </div>
-            <marquee direction="up" scrollamount="2" className="h-40 text-xs text-[#FFFF00]">
-              <p>0x83... won 1000x!</p>
-              <p>PEPE mooned!</p>
-              <p>DOGE forever!</p>
-              <p>Whale alert!</p>
-              <p>Consult the stars!</p>
-            </marquee>
+            <div className="h-40 overflow-hidden relative">
+              <div className="animate-scroll-up text-xs text-[#FFFF00]">
+                <p>0x83... won 1000x!</p>
+                <p>PEPE mooned!</p>
+                <p>DOGE forever!</p>
+                <p>Whale alert!</p>
+                <p>Consult the stars!</p>
+              </div>
+            </div>
 
             <div className="mt-4 border-t border-[#00FF00] pt-2 text-center">
               <img src="/src/assets/yinyang.png" className="w-12 h-12 mx-auto animate-spin mb-2" />

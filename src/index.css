@@ -17,10 +17,16 @@
   --font-mono: "Courier New", monospace;
   
   --animate-blink: blink 1s step-end infinite;
-  
+  --animate-scroll-up: scroll-up 10s linear infinite;
+
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+
+  @keyframes scroll-up {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
   }
 }
 
