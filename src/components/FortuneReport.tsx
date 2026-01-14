@@ -1,15 +1,14 @@
 import { FortuneResult } from '../types'
 import { generatePDF } from '../lib/pdf'
-import { translations, TranslationKey, Language } from '../lib/translations'
+import { translations, TranslationKey } from '../lib/translations'
 
 interface FortuneReportProps {
   result: FortuneResult
   onReset: () => void
   t: typeof translations.en
-  lang: Language
 }
 
-export default function FortuneReport({ result, onReset, t, lang }: FortuneReportProps) {
+export default function FortuneReport({ result, onReset, t }: FortuneReportProps) {
   const handleDownloadPDF = () => {
     generatePDF(result)
   }
